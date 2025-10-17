@@ -1,5 +1,11 @@
 # Coda 公式系统架构分析
 
+> **📚 深度分析**：请参阅 [formula_deep_analysis.md](./formula_deep_analysis.md) 了解更详细的实现细节，包括：
+> - 公式依赖关系的建立机制
+> - 公式值的触发和修改流程
+> - 公式的表达方式和 AST 结构
+> - 公式如何更新 CellStorage 和渲染到 UI
+
 ## 1. 核心组件架构
 
 **主要文件位置：**

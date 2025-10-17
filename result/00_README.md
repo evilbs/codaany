@@ -68,6 +68,17 @@
    
    **内容**：从零构建类 Coda 产品的完整技术方案
 
+7. **[Pack 架构深度分析](./07_pack_architecture_deep_dive.md)** ⭐ 新增
+   - Pack 架构总览（前后端分离）
+   - Pack 与公式系统集成
+   - Pack 认证机制（OAuth2 等）
+   - SyncTable 同步机制
+   - Pack Connection 管理
+   - Pack 与依赖图交互
+   - 完整数据流与代码位置
+   
+   **关键技术**：Pack SDK、OAuth2、SyncTable、Dynamic SyncTable、Connection 权限模型
+
 ### 历史分析文档
 
 这些是之前分析的文档，提供了补充信息：
@@ -114,6 +125,7 @@
 | **数据系统** | DocumentModel, Grid, Storage | 数据模型、表格、持久化 |
 | **协同系统** | OT 算法, WebSocket, 版本控制 | 实时同步、冲突解决、离线支持 |
 | **公式系统** | 词法/语法分析, 依赖图, Worker | 公式解析、依赖追踪、异步计算 |
+| **Pack 系统** | Pack SDK, OAuth2, SyncTable | 外部集成、数据同步、认证管理 |
 
 ---
 
@@ -271,6 +283,7 @@ class DateFormatter implements ColumnFormatter {
 - 公式系统 → [公式引擎深入分析](./06_formula_engine_deep_dive.md)
 - 表格系统 → [数据层深入分析](./02_data_layer_deep_dive.md)
 - 渲染优化 → [渲染层深入分析](./01_rendering_layer_deep_dive.md)
+- Pack 集成 → [Pack 架构深度分析](./07_pack_architecture_deep_dive.md)
 
 ---
 
