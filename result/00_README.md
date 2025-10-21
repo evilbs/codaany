@@ -79,6 +79,18 @@
    
    **关键技术**：Pack SDK、OAuth2、SyncTable、Dynamic SyncTable、Connection 权限模型
 
+### 具体主题分析
+
+这些文档深入分析了特定功能的实现细节：
+
+- **[Add Row 按钮真实实现](./add_row_button_real_implementation.md)** ⭐ 新增 - Add Row 按钮通过 Button Control + AddRow 公式实现
+- **[AddRow 公式执行流程](./addrow_execution_flow.md)** - AddRow 公式执行分析
+- **[表格数据访问指南](./table_data_access_guide.md)** - 如何访问表格数据
+- **[Grid/Table/Page 概念区分](./grid_table_page_concepts.md)** - 核心概念解释
+- **[文本输入到同步流程](./text_input_to_sync_flow.md)** - 文本输入完整流程
+- **[公式深度分析](./formula_deep_analysis.md)** - 公式系统深度分析
+- **[复杂公式执行分析](./complex_formula_execution.md)** - 复杂 Pack 公式分析
+
 ### 历史分析文档
 
 这些是之前分析的文档，提供了补充信息：
@@ -87,7 +99,6 @@
 - **[Coda_Architecture.md](./Coda_Architecture.md)** - Coda 架构总览
 - **[dependency_and_invalidation_graphs.md](./dependency_and_invalidation_graphs.md)** - 依赖图和失效图详解
 - **[dependency_invalidation_flow.md](./dependency_invalidation_flow.md)** - 依赖失效流程
-- **[addrow_execution_flow.md](./addrow_execution_flow.md)** - AddRow 执行流程
 
 ---
 
@@ -284,6 +295,7 @@ class DateFormatter implements ColumnFormatter {
 - 表格系统 → [数据层深入分析](./02_data_layer_deep_dive.md)
 - 渲染优化 → [渲染层深入分析](./01_rendering_layer_deep_dive.md)
 - Pack 集成 → [Pack 架构深度分析](./07_pack_architecture_deep_dive.md)
+- Add Row 实现 → [Add Row 按钮真实实现](./add_row_button_real_implementation.md)
 
 ---
 
