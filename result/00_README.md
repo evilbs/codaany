@@ -83,7 +83,8 @@
 
 这些文档深入分析了特定功能的实现细节：
 
-- **[Add Row 按钮真实实现](./add_row_button_real_implementation.md)** ⭐ 新增 - Add Row 按钮通过 Button Control + AddRow 公式实现
+- **[公式执行完整原理分析](./formula_execution_complete_analysis.md)** ⭐ 新增 - 基于源码分析公式从输入到输出的完整流程，包含每个步骤的入参出参
+- **[Add Row 按钮真实实现](./add_row_button_real_implementation.md)** - Add Row 按钮通过 Button Control + AddRow 公式实现
 - **[AddRow 公式执行流程](./addrow_execution_flow.md)** - AddRow 公式执行分析
 - **[表格数据访问指南](./table_data_access_guide.md)** - 如何访问表格数据
 - **[Grid/Table/Page 概念区分](./grid_table_page_concepts.md)** - 核心概念解释
