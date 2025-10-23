@@ -84,6 +84,7 @@
 这些文档深入分析了特定功能的实现细节：
 
 - **[公式执行完整原理分析](./formula_execution_complete_analysis.md)** ⭐ 新增 - 基于源码分析公式从输入到输出的完整流程，包含每个步骤的入参出参
+- **[Action 执行机制分析](./action_engine_analysis.md)** ⭐ 新增 - 详解 Action 是什么，与普通公式的区别，以及完整执行流程
 - **[Add Row 按钮真实实现](./add_row_button_real_implementation.md)** - Add Row 按钮通过 Button Control + AddRow 公式实现
 - **[AddRow 公式执行流程](./addrow_execution_flow.md)** - AddRow 公式执行分析
 - **[表格数据访问指南](./table_data_access_guide.md)** - 如何访问表格数据

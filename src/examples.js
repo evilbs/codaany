@@ -199,6 +199,11 @@ function example4_addRowAction() {
     $$[controlGrid:ctrl-dept:::false:false:DeptInput]
   )`;
 
+  /**
+   * functionNanme: addRow
+   * data: []
+   */
+
   console.log('\n执行公式: AddRow(...)');
   const result = engine.executeExpression(formula);
 
