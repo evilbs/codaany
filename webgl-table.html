@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL 4x4 表格</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        canvas {
+            border: 2px solid #333;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fd;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebGL 绘制的 4x4 表格</h1>
+    <canvas id="webglCanvas" width="600" height="600"></canvas>
+    
+    <div class="info">
+        <h3>说明：</h3>
+        <p>这个表格使用 WebGL 绘制，包含：</p>
+        <ul>
+            <li>4行4列的网格线</li>
+            <li>黑色边框线条</li>
+            <li>每个单元格大小相等</li>
+            <li>使用 WebGL 的线条绘制功能</li>
+        </ul>
+    </div>
+
+    <script>
+        // 获取 canvas 元素和 WebGL 上下文
+        const canvas = document.getElementById('webglCanvas');
+        const gl = canvas.getContext('webgl');
+        
+        if (!gl) {
+            alert('您的浏览器不支持 WebGL！');
+        }
+
+        // 顶点着色器源码
+        const vertexShaderSource = `
+            attribute vec2 a_position;
+            uniform vec2 u_resolution;
+            
+            void main() {
+                // 将坐标从像素空间转换为 0.0 到 1.0 的范围
+                vec2 zeroToOne = a_position / u_resolution;
+                
+                // 将 0->1 转换为 0->2
+                vec2 zeroToTwo = zeroToOne * 2.0;
+                
+                // 将 0->2 转换为 -1->+1 (clipspace)
+                vec2 clipSpace = zeroToTwo - 1.0;
+                
+                gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+            }
+        `;
+
+        // 片段着色器源码
+        const fragmentShaderSource = `
+            precision mediump float;
+            uniform vec4 u_color;
+            
+            void main() {
+                gl_FragColor = u_color;
+            }
+        `;
+
+        // 创建着色器
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error('着色器编译错误:', gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            
+            return shader;
+        }
+
+        // 创建着色器程序
+        function createProgram(gl, vertexShader, fragmentShader) {
+            const program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                console.error('程序链接错误:', gl.getProgramInfoLog(program));
+                gl.deleteProgram(program);
+                return null;
+            }
+            
+            return program;
+        }
+
+        // 创建着色器程序
+        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+        const program = createProgram(gl, vertexShader, fragmentShader);
+
+        // 获取属性位置
+        const positionAttributeLocation = gl.getAttribLocation(program, 'a_position');
+        const resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
+        const colorUniformLocation = gl.getUniformLocation(program, 'u_color');
+
+        // 创建位置缓冲区
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+        // 绘制线条的函数
+        function drawLine(x1, y1, x2, y2) {
+            const positions = [
+                x1, y1,
+                x2, y2
+            ];
+            
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+            gl.drawArrays(gl.LINES, 0, 2);
+        }
+
+        // 绘制 4x4 表格
+        function drawTable() {
+            // 设置视口
+            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+            
+            // 清除画布
+            gl.clearColor(1.0, 1.0, 1.0, 1.0);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            
+            // 使用着色器程序
+            gl.useProgram(program);
+            
+            // 启用位置属性
+            gl.enableVertexAttribArray(positionAttributeLocation);
+            gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+            
+            // 设置分辨率
+            gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+            
+            // 设置线条颜色为黑色
+            gl.uniform4f(colorUniformLocation, 0.0, 0.0, 0.0, 1.0);
+            
+            // 设置线条宽度
+            gl.lineWidth(2.0);
+            
+            // 表格参数
+            const margin = 50;
+            const tableWidth = gl.canvas.width - 2 * margin;
+            const tableHeight = gl.canvas.height - 2 * margin;
+            const cellWidth = tableWidth / 4;
+            const cellHeight = tableHeight / 4;
+            
+            // 绘制垂直线
+            for (let i = 0; i <= 4; i++) {
+                const x = margin + i * cellWidth;
+                drawLine(x, margin, x, margin + tableHeight);
+            }
+            
+            // 绘制水平线
+            for (let i = 0; i <= 4; i++) {
+                const y = margin + i * cellHeight;
+                drawLine(margin, y, margin + tableWidth, y);
+            }
+        }
+
+        // 绘制表格
+        drawTable();
+    </script>
+</body>
+</html>

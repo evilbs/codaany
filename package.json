@@ -1,0 +1,20 @@
+{
+  "name": "mini-coda-formula-engine",
+  "version": "1.0.0",
+  "description": "A mini Coda-like formula engine with parsing, execution, and actions",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/examples.js",
+    "test": "node src/examples.js"
+  },
+  "keywords": [
+    "formula",
+    "parser",
+    "coda",
+    "ast",
+    "executor"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+
